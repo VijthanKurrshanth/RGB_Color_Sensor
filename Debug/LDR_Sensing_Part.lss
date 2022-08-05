@@ -3,31 +3,31 @@ LDR_Sensing_Part.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000003ac  2**0
+  0 .data         00000000  00800100  00800100  000003c6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000338  00000000  00000000  00000074  2**1
+  1 .text         00000352  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000000b  00800100  00800100  000003ac  2**0
+  2 .bss          0000000b  00800100  00800100  000003c6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000003ac  2**0
+  3 .comment      00000030  00000000  00000000  000003c6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000003dc  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000003f8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000050  00000000  00000000  0000041c  2**0
+  5 .debug_aranges 00000050  00000000  00000000  00000438  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00000a42  00000000  00000000  0000046c  2**0
+  6 .debug_info   00000a42  00000000  00000000  00000488  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000006fa  00000000  00000000  00000eae  2**0
+  7 .debug_abbrev 000006fa  00000000  00000000  00000eca  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000490  00000000  00000000  000015a8  2**0
+  8 .debug_line   000004a8  00000000  00000000  000015c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000b4  00000000  00000000  00001a38  2**2
+  9 .debug_frame  000000b4  00000000  00000000  00001a6c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000042e  00000000  00000000  00001aec  2**0
+ 10 .debug_str    0000042e  00000000  00000000  00001b20  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000003ae  00000000  00000000  00001f1a  2**0
+ 11 .debug_loc    000003ae  00000000  00000000  00001f4e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000040  00000000  00000000  000022c8  2**0
+ 12 .debug_ranges 00000040  00000000  00000000  000022fc  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -54,7 +54,7 @@ Disassembly of section .text:
   48:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   4c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   50:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
-  54:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__vector_21>
+  54:	0c 94 59 00 	jmp	0xb2	; 0xb2 <__vector_21>
   58:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   5c:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
   60:	0c 94 46 00 	jmp	0x8c	; 0x8c <__bad_interrupt>
@@ -81,8 +81,8 @@ Disassembly of section .text:
   7e:	ab 30       	cpi	r26, 0x0B	; 11
   80:	b2 07       	cpc	r27, r18
   82:	e1 f7       	brne	.-8      	; 0x7c <.do_clear_bss_loop>
-  84:	0e 94 80 01 	call	0x300	; 0x300 <main>
-  88:	0c 94 9a 01 	jmp	0x334	; 0x334 <_exit>
+  84:	0e 94 8d 01 	call	0x31a	; 0x31a <main>
+  88:	0c 94 a7 01 	jmp	0x34e	; 0x34e <_exit>
 
 0000008c <__bad_interrupt>:
   8c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -93,445 +93,462 @@ void port_config();
 
 void port_config()
 {
-	DDRD = 0x00;
-  90:	1a b8       	out	0x0a, r1	; 10
+	DDRD = 0x0F;
+  90:	8f e0       	ldi	r24, 0x0F	; 15
+  92:	8a b9       	out	0x0a, r24	; 10
 	DDRB = 0xFF;
-  92:	8f ef       	ldi	r24, 0xFF	; 255
-  94:	84 b9       	out	0x04, r24	; 4
-	PORTD = 0xE0;
-  96:	80 ee       	ldi	r24, 0xE0	; 224
-  98:	8b b9       	out	0x0b, r24	; 11
+  94:	8f ef       	ldi	r24, 0xFF	; 255
+  96:	84 b9       	out	0x04, r24	; 4
+	PORTD = 0xF0;
+  98:	80 ef       	ldi	r24, 0xF0	; 240
+  9a:	8b b9       	out	0x0b, r24	; 11
 	PORTB = 0x00;
-  9a:	15 b8       	out	0x05, r1	; 5
-  9c:	08 95       	ret
+  9c:	15 b8       	out	0x05, r1	; 5
+  9e:	08 95       	ret
 
-0000009e <set_adc>:
+000000a0 <set_adc>:
 uint16_t ADC_O2;
 uint16_t ADC_O;
 
 void set_adc()
 {
 	ADMUX = 0x40;
-  9e:	80 e4       	ldi	r24, 0x40	; 64
-  a0:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7f807c>
+  a0:	80 e4       	ldi	r24, 0x40	; 64
+  a2:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7f807c>
 	ADCSRA = 0xCF;
-  a4:	8f ec       	ldi	r24, 0xCF	; 207
-  a6:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
+  a6:	8f ec       	ldi	r24, 0xCF	; 207
+  a8:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7f807a>
 	ADCSRB = 0x00;
-  aa:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <__TEXT_REGION_LENGTH__+0x7f807b>
-  ae:	08 95       	ret
+  ac:	10 92 7b 00 	sts	0x007B, r1	; 0x80007b <__TEXT_REGION_LENGTH__+0x7f807b>
+  b0:	08 95       	ret
 
-000000b0 <__vector_21>:
+000000b2 <__vector_21>:
 }
 
 
 ISR(ADC_vect)
 {
-  b0:	1f 92       	push	r1
-  b2:	0f 92       	push	r0
-  b4:	0f b6       	in	r0, 0x3f	; 63
-  b6:	0f 92       	push	r0
-  b8:	11 24       	eor	r1, r1
-  ba:	2f 93       	push	r18
-  bc:	8f 93       	push	r24
-  be:	9f 93       	push	r25
-  c0:	af 93       	push	r26
-  c2:	bf 93       	push	r27
-  c4:	ef 93       	push	r30
-  c6:	ff 93       	push	r31
+  b2:	1f 92       	push	r1
+  b4:	0f 92       	push	r0
+  b6:	0f b6       	in	r0, 0x3f	; 63
+  b8:	0f 92       	push	r0
+  ba:	11 24       	eor	r1, r1
+  bc:	2f 93       	push	r18
+  be:	8f 93       	push	r24
+  c0:	9f 93       	push	r25
+  c2:	af 93       	push	r26
+  c4:	bf 93       	push	r27
+  c6:	ef 93       	push	r30
+  c8:	ff 93       	push	r31
 	ADC_O1 = ADCL;
-  c8:	a8 e7       	ldi	r26, 0x78	; 120
-  ca:	b0 e0       	ldi	r27, 0x00	; 0
-  cc:	8c 91       	ld	r24, X
-  ce:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <ADC_O1>
+  ca:	a8 e7       	ldi	r26, 0x78	; 120
+  cc:	b0 e0       	ldi	r27, 0x00	; 0
+  ce:	8c 91       	ld	r24, X
+  d0:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <ADC_O1>
 	ADC_O2 = ADCH;
-  d2:	e9 e7       	ldi	r30, 0x79	; 121
-  d4:	f0 e0       	ldi	r31, 0x00	; 0
-  d6:	80 81       	ld	r24, Z
-  d8:	90 e0       	ldi	r25, 0x00	; 0
-  da:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <ADC_O2+0x1>
-  de:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <ADC_O2>
+  d4:	e9 e7       	ldi	r30, 0x79	; 121
+  d6:	f0 e0       	ldi	r31, 0x00	; 0
+  d8:	80 81       	ld	r24, Z
+  da:	90 e0       	ldi	r25, 0x00	; 0
+  dc:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <ADC_O2+0x1>
+  e0:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <ADC_O2>
 	ADC_O = ADCL | ADCH << 8;
-  e2:	2c 91       	ld	r18, X
-  e4:	80 81       	ld	r24, Z
-  e6:	90 e0       	ldi	r25, 0x00	; 0
-  e8:	98 2f       	mov	r25, r24
-  ea:	88 27       	eor	r24, r24
-  ec:	82 2b       	or	r24, r18
-  ee:	90 93 07 01 	sts	0x0107, r25	; 0x800107 <ADC_O+0x1>
-  f2:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <ADC_O>
+  e4:	2c 91       	ld	r18, X
+  e6:	80 81       	ld	r24, Z
+  e8:	90 e0       	ldi	r25, 0x00	; 0
+  ea:	98 2f       	mov	r25, r24
+  ec:	88 27       	eor	r24, r24
+  ee:	82 2b       	or	r24, r18
+  f0:	90 93 07 01 	sts	0x0107, r25	; 0x800107 <ADC_O+0x1>
+  f4:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <ADC_O>
 	ADCSRA |= 0x40;
-  f6:	ea e7       	ldi	r30, 0x7A	; 122
-  f8:	f0 e0       	ldi	r31, 0x00	; 0
-  fa:	80 81       	ld	r24, Z
-  fc:	80 64       	ori	r24, 0x40	; 64
-  fe:	80 83       	st	Z, r24
+  f8:	ea e7       	ldi	r30, 0x7A	; 122
+  fa:	f0 e0       	ldi	r31, 0x00	; 0
+  fc:	80 81       	ld	r24, Z
+  fe:	80 64       	ori	r24, 0x40	; 64
+ 100:	80 83       	st	Z, r24
 }
- 100:	ff 91       	pop	r31
- 102:	ef 91       	pop	r30
- 104:	bf 91       	pop	r27
- 106:	af 91       	pop	r26
- 108:	9f 91       	pop	r25
- 10a:	8f 91       	pop	r24
- 10c:	2f 91       	pop	r18
- 10e:	0f 90       	pop	r0
- 110:	0f be       	out	0x3f, r0	; 63
- 112:	0f 90       	pop	r0
- 114:	1f 90       	pop	r1
- 116:	18 95       	reti
+ 102:	ff 91       	pop	r31
+ 104:	ef 91       	pop	r30
+ 106:	bf 91       	pop	r27
+ 108:	af 91       	pop	r26
+ 10a:	9f 91       	pop	r25
+ 10c:	8f 91       	pop	r24
+ 10e:	2f 91       	pop	r18
+ 110:	0f 90       	pop	r0
+ 112:	0f be       	out	0x3f, r0	; 63
+ 114:	0f 90       	pop	r0
+ 116:	1f 90       	pop	r1
+ 118:	18 95       	reti
 
-00000118 <voltage>:
+0000011a <voltage>:
 
 uint16_t voltage()
 {
 	return ADC_O;				
 }
- 118:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <ADC_O>
- 11c:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <ADC_O+0x1>
- 120:	08 95       	ret
+ 11a:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <ADC_O>
+ 11e:	90 91 07 01 	lds	r25, 0x0107	; 0x800107 <ADC_O+0x1>
+ 122:	08 95       	ret
 
-00000122 <light>:
+00000124 <light>:
 uint16_t green_light_on = 0;
 uint16_t blue_light_on = 0;
 
 void light()
 {
 	if ((PIND & 1 << PIND7) == 0)
- 122:	4f 99       	sbic	0x09, 7	; 9
- 124:	13 c0       	rjmp	.+38     	; 0x14c <light+0x2a>
+ 124:	4f 99       	sbic	0x09, 7	; 9
+ 126:	13 c0       	rjmp	.+38     	; 0x14e <light+0x2a>
 	{
 		PORTB |= 1 << PORTB1;
- 126:	85 b1       	in	r24, 0x05	; 5
- 128:	82 60       	ori	r24, 0x02	; 2
- 12a:	85 b9       	out	0x05, r24	; 5
+ 128:	85 b1       	in	r24, 0x05	; 5
+ 12a:	82 60       	ori	r24, 0x02	; 2
+ 12c:	85 b9       	out	0x05, r24	; 5
 		red_light_on = 1;
- 12c:	81 e0       	ldi	r24, 0x01	; 1
- 12e:	90 e0       	ldi	r25, 0x00	; 0
- 130:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <red_light_on+0x1>
- 134:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <red_light_on>
+ 12e:	81 e0       	ldi	r24, 0x01	; 1
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <red_light_on+0x1>
+ 136:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <red_light_on>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 138:	2f ef       	ldi	r18, 0xFF	; 255
- 13a:	81 ee       	ldi	r24, 0xE1	; 225
- 13c:	94 e0       	ldi	r25, 0x04	; 4
- 13e:	21 50       	subi	r18, 0x01	; 1
- 140:	80 40       	sbci	r24, 0x00	; 0
- 142:	90 40       	sbci	r25, 0x00	; 0
- 144:	e1 f7       	brne	.-8      	; 0x13e <light+0x1c>
- 146:	00 c0       	rjmp	.+0      	; 0x148 <light+0x26>
- 148:	00 00       	nop
- 14a:	08 95       	ret
+ 13a:	2f ef       	ldi	r18, 0xFF	; 255
+ 13c:	81 ee       	ldi	r24, 0xE1	; 225
+ 13e:	94 e0       	ldi	r25, 0x04	; 4
+ 140:	21 50       	subi	r18, 0x01	; 1
+ 142:	80 40       	sbci	r24, 0x00	; 0
+ 144:	90 40       	sbci	r25, 0x00	; 0
+ 146:	e1 f7       	brne	.-8      	; 0x140 <light+0x1c>
+ 148:	00 c0       	rjmp	.+0      	; 0x14a <light+0x26>
+ 14a:	00 00       	nop
+ 14c:	08 95       	ret
 		_delay_ms(100);
 	}
 		
 	else if ((PIND & 1 << PIND6) ==0)
- 14c:	4e 99       	sbic	0x09, 6	; 9
- 14e:	13 c0       	rjmp	.+38     	; 0x176 <light+0x54>
+ 14e:	4e 99       	sbic	0x09, 6	; 9
+ 150:	13 c0       	rjmp	.+38     	; 0x178 <light+0x54>
 	{
 		PORTB |= 1 << PORTB2;
- 150:	85 b1       	in	r24, 0x05	; 5
- 152:	84 60       	ori	r24, 0x04	; 4
- 154:	85 b9       	out	0x05, r24	; 5
+ 152:	85 b1       	in	r24, 0x05	; 5
+ 154:	84 60       	ori	r24, 0x04	; 4
+ 156:	85 b9       	out	0x05, r24	; 5
 		green_light_on = 1;
- 156:	81 e0       	ldi	r24, 0x01	; 1
- 158:	90 e0       	ldi	r25, 0x00	; 0
- 15a:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <green_light_on+0x1>
- 15e:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <green_light_on>
- 162:	2f ef       	ldi	r18, 0xFF	; 255
- 164:	81 ee       	ldi	r24, 0xE1	; 225
- 166:	94 e0       	ldi	r25, 0x04	; 4
- 168:	21 50       	subi	r18, 0x01	; 1
- 16a:	80 40       	sbci	r24, 0x00	; 0
- 16c:	90 40       	sbci	r25, 0x00	; 0
- 16e:	e1 f7       	brne	.-8      	; 0x168 <light+0x46>
- 170:	00 c0       	rjmp	.+0      	; 0x172 <light+0x50>
- 172:	00 00       	nop
- 174:	08 95       	ret
+ 158:	81 e0       	ldi	r24, 0x01	; 1
+ 15a:	90 e0       	ldi	r25, 0x00	; 0
+ 15c:	90 93 03 01 	sts	0x0103, r25	; 0x800103 <green_light_on+0x1>
+ 160:	80 93 02 01 	sts	0x0102, r24	; 0x800102 <green_light_on>
+ 164:	2f ef       	ldi	r18, 0xFF	; 255
+ 166:	81 ee       	ldi	r24, 0xE1	; 225
+ 168:	94 e0       	ldi	r25, 0x04	; 4
+ 16a:	21 50       	subi	r18, 0x01	; 1
+ 16c:	80 40       	sbci	r24, 0x00	; 0
+ 16e:	90 40       	sbci	r25, 0x00	; 0
+ 170:	e1 f7       	brne	.-8      	; 0x16a <light+0x46>
+ 172:	00 c0       	rjmp	.+0      	; 0x174 <light+0x50>
+ 174:	00 00       	nop
+ 176:	08 95       	ret
 		_delay_ms(100);
 	}
 	else if ((PIND & 1 << PIND5) ==0)
- 176:	4d 99       	sbic	0x09, 5	; 9
- 178:	13 c0       	rjmp	.+38     	; 0x1a0 <light+0x7e>
+ 178:	4d 99       	sbic	0x09, 5	; 9
+ 17a:	13 c0       	rjmp	.+38     	; 0x1a2 <light+0x7e>
 	{
 		PORTB |= 1 << PORTB3;
- 17a:	85 b1       	in	r24, 0x05	; 5
- 17c:	88 60       	ori	r24, 0x08	; 8
- 17e:	85 b9       	out	0x05, r24	; 5
+ 17c:	85 b1       	in	r24, 0x05	; 5
+ 17e:	88 60       	ori	r24, 0x08	; 8
+ 180:	85 b9       	out	0x05, r24	; 5
 		blue_light_on = 1;
- 180:	81 e0       	ldi	r24, 0x01	; 1
- 182:	90 e0       	ldi	r25, 0x00	; 0
- 184:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 188:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
- 18c:	2f ef       	ldi	r18, 0xFF	; 255
- 18e:	81 ee       	ldi	r24, 0xE1	; 225
- 190:	94 e0       	ldi	r25, 0x04	; 4
- 192:	21 50       	subi	r18, 0x01	; 1
- 194:	80 40       	sbci	r24, 0x00	; 0
- 196:	90 40       	sbci	r25, 0x00	; 0
- 198:	e1 f7       	brne	.-8      	; 0x192 <light+0x70>
- 19a:	00 c0       	rjmp	.+0      	; 0x19c <light+0x7a>
- 19c:	00 00       	nop
- 19e:	08 95       	ret
+ 182:	81 e0       	ldi	r24, 0x01	; 1
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 18a:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 18e:	2f ef       	ldi	r18, 0xFF	; 255
+ 190:	81 ee       	ldi	r24, 0xE1	; 225
+ 192:	94 e0       	ldi	r25, 0x04	; 4
+ 194:	21 50       	subi	r18, 0x01	; 1
+ 196:	80 40       	sbci	r24, 0x00	; 0
+ 198:	90 40       	sbci	r25, 0x00	; 0
+ 19a:	e1 f7       	brne	.-8      	; 0x194 <light+0x70>
+ 19c:	00 c0       	rjmp	.+0      	; 0x19e <light+0x7a>
+ 19e:	00 00       	nop
+ 1a0:	08 95       	ret
 		_delay_ms(100);
 	}
 	else
 	{
 		PORTB &= 0xF0;
- 1a0:	85 b1       	in	r24, 0x05	; 5
- 1a2:	80 7f       	andi	r24, 0xF0	; 240
- 1a4:	85 b9       	out	0x05, r24	; 5
- 1a6:	08 95       	ret
+ 1a2:	85 b1       	in	r24, 0x05	; 5
+ 1a4:	80 7f       	andi	r24, 0xF0	; 240
+ 1a6:	85 b9       	out	0x05, r24	; 5
+ 1a8:	08 95       	ret
 
-000001a8 <output>:
+000001aa <output>:
 #include "light_on.h"
 #include "config.h"
 
 void output()
 {
 	set_adc();
- 1a8:	0e 94 4f 00 	call	0x9e	; 0x9e <set_adc>
+ 1aa:	0e 94 50 00 	call	0xa0	; 0xa0 <set_adc>
 	uint16_t volt = voltage();
- 1ac:	0e 94 8c 00 	call	0x118	; 0x118 <voltage>
+ 1ae:	0e 94 8d 00 	call	0x11a	; 0x11a <voltage>
 // 	{
 // 		PORTB |= 1 << PORTB4;
 // 		_delay_ms(100);
 // 	}
 
-	if (volt > 0x2AA)
- 1b0:	8b 3a       	cpi	r24, 0xAB	; 171
- 1b2:	22 e0       	ldi	r18, 0x02	; 2
- 1b4:	92 07       	cpc	r25, r18
- 1b6:	08 f4       	brcc	.+2      	; 0x1ba <output+0x12>
- 1b8:	46 c0       	rjmp	.+140    	; 0x246 <output+0x9e>
+	if (volt > 683)
+ 1b2:	8c 3a       	cpi	r24, 0xAC	; 172
+ 1b4:	22 e0       	ldi	r18, 0x02	; 2
+ 1b6:	92 07       	cpc	r25, r18
+ 1b8:	08 f4       	brcc	.+2      	; 0x1bc <output+0x12>
+ 1ba:	4f c0       	rjmp	.+158    	; 0x25a <output+0xb0>
 	{
 		if (red_light_on)
- 1ba:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <red_light_on>
- 1be:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <red_light_on+0x1>
- 1c2:	89 2b       	or	r24, r25
- 1c4:	89 f0       	breq	.+34     	; 0x1e8 <output+0x40>
+ 1bc:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <red_light_on>
+ 1c0:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <red_light_on+0x1>
+ 1c4:	89 2b       	or	r24, r25
+ 1c6:	a1 f0       	breq	.+40     	; 0x1f0 <output+0x46>
 		{
 			PORTB |= 1 << PORTB4;
- 1c6:	85 b1       	in	r24, 0x05	; 5
- 1c8:	80 61       	ori	r24, 0x10	; 16
- 1ca:	85 b9       	out	0x05, r24	; 5
- 1cc:	4f ef       	ldi	r20, 0xFF	; 255
- 1ce:	81 ee       	ldi	r24, 0xE1	; 225
- 1d0:	94 e0       	ldi	r25, 0x04	; 4
- 1d2:	41 50       	subi	r20, 0x01	; 1
- 1d4:	80 40       	sbci	r24, 0x00	; 0
- 1d6:	90 40       	sbci	r25, 0x00	; 0
- 1d8:	e1 f7       	brne	.-8      	; 0x1d2 <output+0x2a>
- 1da:	00 c0       	rjmp	.+0      	; 0x1dc <output+0x34>
- 1dc:	00 00       	nop
+ 1c8:	85 b1       	in	r24, 0x05	; 5
+ 1ca:	80 61       	ori	r24, 0x10	; 16
+ 1cc:	85 b9       	out	0x05, r24	; 5
+			PORTD |= 1 << PORTD3;
+ 1ce:	8b b1       	in	r24, 0x0b	; 11
+ 1d0:	88 60       	ori	r24, 0x08	; 8
+ 1d2:	8b b9       	out	0x0b, r24	; 11
+ 1d4:	4f ef       	ldi	r20, 0xFF	; 255
+ 1d6:	81 ee       	ldi	r24, 0xE1	; 225
+ 1d8:	94 e0       	ldi	r25, 0x04	; 4
+ 1da:	41 50       	subi	r20, 0x01	; 1
+ 1dc:	80 40       	sbci	r24, 0x00	; 0
+ 1de:	90 40       	sbci	r25, 0x00	; 0
+ 1e0:	e1 f7       	brne	.-8      	; 0x1da <output+0x30>
+ 1e2:	00 c0       	rjmp	.+0      	; 0x1e4 <output+0x3a>
+ 1e4:	00 00       	nop
 			_delay_ms(100);
 			red_light_on = 0;
- 1de:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <red_light_on+0x1>
- 1e2:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <red_light_on>
- 1e6:	88 c0       	rjmp	.+272    	; 0x2f8 <output+0x150>
+ 1e6:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <red_light_on+0x1>
+ 1ea:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <red_light_on>
+ 1ee:	91 c0       	rjmp	.+290    	; 0x312 <output+0x168>
 			
 		}
 		else if (green_light_on)
- 1e8:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <green_light_on>
- 1ec:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <green_light_on+0x1>
- 1f0:	89 2b       	or	r24, r25
- 1f2:	89 f0       	breq	.+34     	; 0x216 <output+0x6e>
+ 1f0:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <green_light_on>
+ 1f4:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <green_light_on+0x1>
+ 1f8:	89 2b       	or	r24, r25
+ 1fa:	a1 f0       	breq	.+40     	; 0x224 <output+0x7a>
 		{
 			PORTB |= 1 << PORTB5;
- 1f4:	85 b1       	in	r24, 0x05	; 5
- 1f6:	80 62       	ori	r24, 0x20	; 32
- 1f8:	85 b9       	out	0x05, r24	; 5
- 1fa:	2f ef       	ldi	r18, 0xFF	; 255
- 1fc:	41 ee       	ldi	r20, 0xE1	; 225
- 1fe:	84 e0       	ldi	r24, 0x04	; 4
- 200:	21 50       	subi	r18, 0x01	; 1
- 202:	40 40       	sbci	r20, 0x00	; 0
- 204:	80 40       	sbci	r24, 0x00	; 0
- 206:	e1 f7       	brne	.-8      	; 0x200 <output+0x58>
- 208:	00 c0       	rjmp	.+0      	; 0x20a <output+0x62>
- 20a:	00 00       	nop
+ 1fc:	85 b1       	in	r24, 0x05	; 5
+ 1fe:	80 62       	ori	r24, 0x20	; 32
+ 200:	85 b9       	out	0x05, r24	; 5
+			PORTD |= 1 << PORTD2;
+ 202:	8b b1       	in	r24, 0x0b	; 11
+ 204:	84 60       	ori	r24, 0x04	; 4
+ 206:	8b b9       	out	0x0b, r24	; 11
+ 208:	2f ef       	ldi	r18, 0xFF	; 255
+ 20a:	41 ee       	ldi	r20, 0xE1	; 225
+ 20c:	84 e0       	ldi	r24, 0x04	; 4
+ 20e:	21 50       	subi	r18, 0x01	; 1
+ 210:	40 40       	sbci	r20, 0x00	; 0
+ 212:	80 40       	sbci	r24, 0x00	; 0
+ 214:	e1 f7       	brne	.-8      	; 0x20e <output+0x64>
+ 216:	00 c0       	rjmp	.+0      	; 0x218 <output+0x6e>
+ 218:	00 00       	nop
 			_delay_ms(100);
 			green_light_on = 0;
- 20c:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <green_light_on+0x1>
- 210:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <green_light_on>
- 214:	71 c0       	rjmp	.+226    	; 0x2f8 <output+0x150>
+ 21a:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <green_light_on+0x1>
+ 21e:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <green_light_on>
+ 222:	77 c0       	rjmp	.+238    	; 0x312 <output+0x168>
 			
 		}
 		else if (blue_light_on)
- 216:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
- 21a:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 21e:	89 2b       	or	r24, r25
- 220:	09 f4       	brne	.+2      	; 0x224 <output+0x7c>
- 222:	6a c0       	rjmp	.+212    	; 0x2f8 <output+0x150>
+ 224:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 228:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 22c:	89 2b       	or	r24, r25
+ 22e:	09 f4       	brne	.+2      	; 0x232 <output+0x88>
+ 230:	70 c0       	rjmp	.+224    	; 0x312 <output+0x168>
 		{
 			PORTB |= 1 << PORTB6;
- 224:	85 b1       	in	r24, 0x05	; 5
- 226:	80 64       	ori	r24, 0x40	; 64
- 228:	85 b9       	out	0x05, r24	; 5
- 22a:	9f ef       	ldi	r25, 0xFF	; 255
- 22c:	21 ee       	ldi	r18, 0xE1	; 225
- 22e:	44 e0       	ldi	r20, 0x04	; 4
- 230:	91 50       	subi	r25, 0x01	; 1
- 232:	20 40       	sbci	r18, 0x00	; 0
- 234:	40 40       	sbci	r20, 0x00	; 0
- 236:	e1 f7       	brne	.-8      	; 0x230 <output+0x88>
- 238:	00 c0       	rjmp	.+0      	; 0x23a <output+0x92>
- 23a:	00 00       	nop
+ 232:	85 b1       	in	r24, 0x05	; 5
+ 234:	80 64       	ori	r24, 0x40	; 64
+ 236:	85 b9       	out	0x05, r24	; 5
+			PORTD |= 1 << PORTD1;
+ 238:	8b b1       	in	r24, 0x0b	; 11
+ 23a:	82 60       	ori	r24, 0x02	; 2
+ 23c:	8b b9       	out	0x0b, r24	; 11
+ 23e:	9f ef       	ldi	r25, 0xFF	; 255
+ 240:	21 ee       	ldi	r18, 0xE1	; 225
+ 242:	44 e0       	ldi	r20, 0x04	; 4
+ 244:	91 50       	subi	r25, 0x01	; 1
+ 246:	20 40       	sbci	r18, 0x00	; 0
+ 248:	40 40       	sbci	r20, 0x00	; 0
+ 24a:	e1 f7       	brne	.-8      	; 0x244 <output+0x9a>
+ 24c:	00 c0       	rjmp	.+0      	; 0x24e <output+0xa4>
+ 24e:	00 00       	nop
 			_delay_ms(100);
 			blue_light_on = 0;
- 23c:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 240:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
- 244:	59 c0       	rjmp	.+178    	; 0x2f8 <output+0x150>
+ 250:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 254:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 258:	5c c0       	rjmp	.+184    	; 0x312 <output+0x168>
 			
 		}
 	}
-	else if ((volt <= 0x2AA) & (volt >= 0x155))
- 246:	9c 01       	movw	r18, r24
- 248:	25 55       	subi	r18, 0x55	; 85
- 24a:	31 40       	sbci	r19, 0x01	; 1
- 24c:	26 35       	cpi	r18, 0x56	; 86
- 24e:	31 40       	sbci	r19, 0x01	; 1
- 250:	08 f0       	brcs	.+2      	; 0x254 <output+0xac>
- 252:	45 c0       	rjmp	.+138    	; 0x2de <output+0x136>
+	else if ((volt <= 683) & (volt >= 341))
+ 25a:	9c 01       	movw	r18, r24
+ 25c:	25 55       	subi	r18, 0x55	; 85
+ 25e:	31 40       	sbci	r19, 0x01	; 1
+ 260:	27 35       	cpi	r18, 0x57	; 87
+ 262:	31 40       	sbci	r19, 0x01	; 1
+ 264:	08 f0       	brcs	.+2      	; 0x268 <output+0xbe>
+ 266:	45 c0       	rjmp	.+138    	; 0x2f2 <output+0x148>
 	{
 		if (red_light_on)
- 254:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <red_light_on>
- 258:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <red_light_on+0x1>
- 25c:	89 2b       	or	r24, r25
- 25e:	89 f0       	breq	.+34     	; 0x282 <output+0xda>
+ 268:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <red_light_on>
+ 26c:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <red_light_on+0x1>
+ 270:	89 2b       	or	r24, r25
+ 272:	89 f0       	breq	.+34     	; 0x296 <output+0xec>
 		{
-			PORTB |= 1 << PORTB4;
- 260:	85 b1       	in	r24, 0x05	; 5
- 262:	80 61       	ori	r24, 0x10	; 16
- 264:	85 b9       	out	0x05, r24	; 5
+			PORTD |= 1 << PORTD3;
+ 274:	8b b1       	in	r24, 0x0b	; 11
+ 276:	88 60       	ori	r24, 0x08	; 8
+ 278:	8b b9       	out	0x0b, r24	; 11
 			red_light_on = 0;
- 266:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <red_light_on+0x1>
- 26a:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <red_light_on>
- 26e:	8f ef       	ldi	r24, 0xFF	; 255
- 270:	91 ee       	ldi	r25, 0xE1	; 225
- 272:	24 e0       	ldi	r18, 0x04	; 4
- 274:	81 50       	subi	r24, 0x01	; 1
- 276:	90 40       	sbci	r25, 0x00	; 0
- 278:	20 40       	sbci	r18, 0x00	; 0
- 27a:	e1 f7       	brne	.-8      	; 0x274 <output+0xcc>
- 27c:	00 c0       	rjmp	.+0      	; 0x27e <output+0xd6>
- 27e:	00 00       	nop
- 280:	3b c0       	rjmp	.+118    	; 0x2f8 <output+0x150>
+ 27a:	10 92 05 01 	sts	0x0105, r1	; 0x800105 <red_light_on+0x1>
+ 27e:	10 92 04 01 	sts	0x0104, r1	; 0x800104 <red_light_on>
+ 282:	8f ef       	ldi	r24, 0xFF	; 255
+ 284:	91 ee       	ldi	r25, 0xE1	; 225
+ 286:	24 e0       	ldi	r18, 0x04	; 4
+ 288:	81 50       	subi	r24, 0x01	; 1
+ 28a:	90 40       	sbci	r25, 0x00	; 0
+ 28c:	20 40       	sbci	r18, 0x00	; 0
+ 28e:	e1 f7       	brne	.-8      	; 0x288 <output+0xde>
+ 290:	00 c0       	rjmp	.+0      	; 0x292 <output+0xe8>
+ 292:	00 00       	nop
+ 294:	3e c0       	rjmp	.+124    	; 0x312 <output+0x168>
 			_delay_ms(100);
 		}
 		else if (green_light_on)
- 282:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <green_light_on>
- 286:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <green_light_on+0x1>
- 28a:	89 2b       	or	r24, r25
- 28c:	89 f0       	breq	.+34     	; 0x2b0 <output+0x108>
+ 296:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <green_light_on>
+ 29a:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <green_light_on+0x1>
+ 29e:	89 2b       	or	r24, r25
+ 2a0:	89 f0       	breq	.+34     	; 0x2c4 <output+0x11a>
 		{
-			PORTB |= 1 << PORTB5;
- 28e:	85 b1       	in	r24, 0x05	; 5
- 290:	80 62       	ori	r24, 0x20	; 32
- 292:	85 b9       	out	0x05, r24	; 5
+			PORTD |= 1 << PORTD2;
+ 2a2:	8b b1       	in	r24, 0x0b	; 11
+ 2a4:	84 60       	ori	r24, 0x04	; 4
+ 2a6:	8b b9       	out	0x0b, r24	; 11
 			green_light_on = 0;
- 294:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <green_light_on+0x1>
- 298:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <green_light_on>
- 29c:	4f ef       	ldi	r20, 0xFF	; 255
- 29e:	81 ee       	ldi	r24, 0xE1	; 225
- 2a0:	94 e0       	ldi	r25, 0x04	; 4
- 2a2:	41 50       	subi	r20, 0x01	; 1
- 2a4:	80 40       	sbci	r24, 0x00	; 0
- 2a6:	90 40       	sbci	r25, 0x00	; 0
- 2a8:	e1 f7       	brne	.-8      	; 0x2a2 <output+0xfa>
- 2aa:	00 c0       	rjmp	.+0      	; 0x2ac <output+0x104>
- 2ac:	00 00       	nop
- 2ae:	24 c0       	rjmp	.+72     	; 0x2f8 <output+0x150>
+ 2a8:	10 92 03 01 	sts	0x0103, r1	; 0x800103 <green_light_on+0x1>
+ 2ac:	10 92 02 01 	sts	0x0102, r1	; 0x800102 <green_light_on>
+ 2b0:	4f ef       	ldi	r20, 0xFF	; 255
+ 2b2:	81 ee       	ldi	r24, 0xE1	; 225
+ 2b4:	94 e0       	ldi	r25, 0x04	; 4
+ 2b6:	41 50       	subi	r20, 0x01	; 1
+ 2b8:	80 40       	sbci	r24, 0x00	; 0
+ 2ba:	90 40       	sbci	r25, 0x00	; 0
+ 2bc:	e1 f7       	brne	.-8      	; 0x2b6 <output+0x10c>
+ 2be:	00 c0       	rjmp	.+0      	; 0x2c0 <output+0x116>
+ 2c0:	00 00       	nop
+ 2c2:	27 c0       	rjmp	.+78     	; 0x312 <output+0x168>
 			_delay_ms(100);
 		}
 		else if (blue_light_on)
- 2b0:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
- 2b4:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 2b8:	89 2b       	or	r24, r25
- 2ba:	f1 f0       	breq	.+60     	; 0x2f8 <output+0x150>
+ 2c4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 2c8:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 2cc:	89 2b       	or	r24, r25
+ 2ce:	09 f1       	breq	.+66     	; 0x312 <output+0x168>
 		{
-			PORTB |= 1 << PORTB6;
- 2bc:	85 b1       	in	r24, 0x05	; 5
- 2be:	80 64       	ori	r24, 0x40	; 64
- 2c0:	85 b9       	out	0x05, r24	; 5
+			PORTD |= 1 << PORTD1;
+ 2d0:	8b b1       	in	r24, 0x0b	; 11
+ 2d2:	82 60       	ori	r24, 0x02	; 2
+ 2d4:	8b b9       	out	0x0b, r24	; 11
 			blue_light_on = 0;
- 2c2:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 2c6:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
- 2ca:	2f ef       	ldi	r18, 0xFF	; 255
- 2cc:	41 ee       	ldi	r20, 0xE1	; 225
- 2ce:	84 e0       	ldi	r24, 0x04	; 4
- 2d0:	21 50       	subi	r18, 0x01	; 1
- 2d2:	40 40       	sbci	r20, 0x00	; 0
- 2d4:	80 40       	sbci	r24, 0x00	; 0
- 2d6:	e1 f7       	brne	.-8      	; 0x2d0 <output+0x128>
- 2d8:	00 c0       	rjmp	.+0      	; 0x2da <output+0x132>
- 2da:	00 00       	nop
- 2dc:	0d c0       	rjmp	.+26     	; 0x2f8 <output+0x150>
+ 2d6:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 2da:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 2de:	2f ef       	ldi	r18, 0xFF	; 255
+ 2e0:	41 ee       	ldi	r20, 0xE1	; 225
+ 2e2:	84 e0       	ldi	r24, 0x04	; 4
+ 2e4:	21 50       	subi	r18, 0x01	; 1
+ 2e6:	40 40       	sbci	r20, 0x00	; 0
+ 2e8:	80 40       	sbci	r24, 0x00	; 0
+ 2ea:	e1 f7       	brne	.-8      	; 0x2e4 <output+0x13a>
+ 2ec:	00 c0       	rjmp	.+0      	; 0x2ee <output+0x144>
+ 2ee:	00 00       	nop
+ 2f0:	10 c0       	rjmp	.+32     	; 0x312 <output+0x168>
 			_delay_ms(100);
 		}
 	}
-	else if (volt < 0x155)
- 2de:	85 35       	cpi	r24, 0x55	; 85
- 2e0:	91 40       	sbci	r25, 0x01	; 1
- 2e2:	50 f4       	brcc	.+20     	; 0x2f8 <output+0x150>
+	else if (volt < 341)
+ 2f2:	85 35       	cpi	r24, 0x55	; 85
+ 2f4:	91 40       	sbci	r25, 0x01	; 1
+ 2f6:	68 f4       	brcc	.+26     	; 0x312 <output+0x168>
 	{
 		PORTB = 0x00;
- 2e4:	15 b8       	out	0x05, r1	; 5
- 2e6:	4f ef       	ldi	r20, 0xFF	; 255
- 2e8:	81 ee       	ldi	r24, 0xE1	; 225
- 2ea:	94 e0       	ldi	r25, 0x04	; 4
- 2ec:	41 50       	subi	r20, 0x01	; 1
- 2ee:	80 40       	sbci	r24, 0x00	; 0
- 2f0:	90 40       	sbci	r25, 0x00	; 0
- 2f2:	e1 f7       	brne	.-8      	; 0x2ec <output+0x144>
- 2f4:	00 c0       	rjmp	.+0      	; 0x2f6 <output+0x14e>
- 2f6:	00 00       	nop
+ 2f8:	15 b8       	out	0x05, r1	; 5
+		PORTD &= 0xF0;
+ 2fa:	8b b1       	in	r24, 0x0b	; 11
+ 2fc:	80 7f       	andi	r24, 0xF0	; 240
+ 2fe:	8b b9       	out	0x0b, r24	; 11
+ 300:	4f ef       	ldi	r20, 0xFF	; 255
+ 302:	81 ee       	ldi	r24, 0xE1	; 225
+ 304:	94 e0       	ldi	r25, 0x04	; 4
+ 306:	41 50       	subi	r20, 0x01	; 1
+ 308:	80 40       	sbci	r24, 0x00	; 0
+ 30a:	90 40       	sbci	r25, 0x00	; 0
+ 30c:	e1 f7       	brne	.-8      	; 0x306 <output+0x15c>
+ 30e:	00 c0       	rjmp	.+0      	; 0x310 <output+0x166>
+ 310:	00 00       	nop
 		_delay_ms(100);
 	}
 	PORTB &= 0xF0;
- 2f8:	85 b1       	in	r24, 0x05	; 5
- 2fa:	80 7f       	andi	r24, 0xF0	; 240
- 2fc:	85 b9       	out	0x05, r24	; 5
- 2fe:	08 95       	ret
+ 312:	85 b1       	in	r24, 0x05	; 5
+ 314:	80 7f       	andi	r24, 0xF0	; 240
+ 316:	85 b9       	out	0x05, r24	; 5
+ 318:	08 95       	ret
 
-00000300 <main>:
+0000031a <main>:
 #include "Light_on.h"
 #include <avr/interrupt.h>
 
 int main(void)
 {
 	port_config();
- 300:	0e 94 48 00 	call	0x90	; 0x90 <port_config>
+ 31a:	0e 94 48 00 	call	0x90	; 0x90 <port_config>
 	sei();
- 304:	78 94       	sei
+ 31e:	78 94       	sei
 	
 	while (1)
 	{
 		light();
- 306:	0e 94 91 00 	call	0x122	; 0x122 <light>
+ 320:	0e 94 92 00 	call	0x124	; 0x124 <light>
 		if (red_light_on | green_light_on | blue_light_on)
- 30a:	20 91 04 01 	lds	r18, 0x0104	; 0x800104 <red_light_on>
- 30e:	30 91 05 01 	lds	r19, 0x0105	; 0x800105 <red_light_on+0x1>
- 312:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <green_light_on>
- 316:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <green_light_on+0x1>
- 31a:	82 2b       	or	r24, r18
- 31c:	93 2b       	or	r25, r19
- 31e:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
- 322:	30 91 01 01 	lds	r19, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 326:	82 2b       	or	r24, r18
- 328:	93 2b       	or	r25, r19
- 32a:	89 2b       	or	r24, r25
- 32c:	61 f3       	breq	.-40     	; 0x306 <main+0x6>
+ 324:	20 91 04 01 	lds	r18, 0x0104	; 0x800104 <red_light_on>
+ 328:	30 91 05 01 	lds	r19, 0x0105	; 0x800105 <red_light_on+0x1>
+ 32c:	80 91 02 01 	lds	r24, 0x0102	; 0x800102 <green_light_on>
+ 330:	90 91 03 01 	lds	r25, 0x0103	; 0x800103 <green_light_on+0x1>
+ 334:	82 2b       	or	r24, r18
+ 336:	93 2b       	or	r25, r19
+ 338:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 33c:	30 91 01 01 	lds	r19, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 340:	82 2b       	or	r24, r18
+ 342:	93 2b       	or	r25, r19
+ 344:	89 2b       	or	r24, r25
+ 346:	61 f3       	breq	.-40     	; 0x320 <main+0x6>
 		{
 			output();
- 32e:	0e 94 d4 00 	call	0x1a8	; 0x1a8 <output>
- 332:	e9 cf       	rjmp	.-46     	; 0x306 <main+0x6>
+ 348:	0e 94 d5 00 	call	0x1aa	; 0x1aa <output>
+ 34c:	e9 cf       	rjmp	.-46     	; 0x320 <main+0x6>
 
-00000334 <_exit>:
- 334:	f8 94       	cli
+0000034e <_exit>:
+ 34e:	f8 94       	cli
 
-00000336 <__stop_program>:
- 336:	ff cf       	rjmp	.-2      	; 0x336 <__stop_program>
+00000350 <__stop_program>:
+ 350:	ff cf       	rjmp	.-2      	; 0x350 <__stop_program>

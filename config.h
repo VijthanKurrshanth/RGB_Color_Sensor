@@ -16,9 +16,9 @@ void port_config();
 
 void port_config()
 {
-	DDRD = 0x00;
+	DDRD = 0x0F;
 	DDRB = 0xFF;
-	PORTD = 0xE0;
+	PORTD = 0xF0;
 	PORTB = 0x00;
 }
 

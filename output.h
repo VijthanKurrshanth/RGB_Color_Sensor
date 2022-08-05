@@ -24,11 +24,12 @@ void output()
 // 		_delay_ms(100);
 // 	}
 
-	if (volt > 0x2AA)
+	if (volt > 683)
 	{
 		if (red_light_on)
 		{
 			PORTB |= 1 << PORTB4;
+			PORTD |= 1 << PORTD3;
 			_delay_ms(100);
 			red_light_on = 0;
 			
@@ -36,6 +37,7 @@ void output()
 		else if (green_light_on)
 		{
 			PORTB |= 1 << PORTB5;
+			PORTD |= 1 << PORTD2;
 			_delay_ms(100);
 			green_light_on = 0;
 			
@@ -43,35 +45,37 @@ void output()
 		else if (blue_light_on)
 		{
 			PORTB |= 1 << PORTB6;
+			PORTD |= 1 << PORTD1;
 			_delay_ms(100);
 			blue_light_on = 0;
 			
 		}
 	}
-	else if ((volt <= 0x2AA) & (volt >= 0x155))
+	else if ((volt <= 683) & (volt >= 341))
 	{
 		if (red_light_on)
 		{
-			PORTB |= 1 << PORTB4;
+			PORTD |= 1 << PORTD3;
 			red_light_on = 0;
 			_delay_ms(100);
 		}
 		else if (green_light_on)
 		{
-			PORTB |= 1 << PORTB5;
+			PORTD |= 1 << PORTD2;
 			green_light_on = 0;
 			_delay_ms(100);
 		}
 		else if (blue_light_on)
 		{
-			PORTB |= 1 << PORTB6;
+			PORTD |= 1 << PORTD1;
 			blue_light_on = 0;
 			_delay_ms(100);
 		}
 	}
-	else if (volt < 0x155)
+	else if (volt < 341)
 	{
 		PORTB = 0x00;
+		PORTD &= 0xF0;
 		_delay_ms(100);
 	}
 	PORTB &= 0xF0;
