@@ -18,11 +18,6 @@ void output()
 {
 	set_adc();
 	uint16_t volt = voltage();
-// 	if (ADC_O != 0)
-// 	{
-// 		PORTB |= 1 << PORTB4;
-// 		_delay_ms(100);
-// 	}
 
 	if (volt > 683)
 	{
@@ -78,7 +73,9 @@ void output()
 		PORTD &= 0xF0;
 		_delay_ms(100);
 	}
-	PORTB &= 0xF0;
+	
+	PORTB &= 0x0F;
+	PORTD &= 0xF0;
 }
 
 

@@ -38,11 +38,8 @@ void light()
 		blue_light_on = 1;
 		_delay_ms(100);
 	}
-	else
-	{
-		PORTB &= 0xF0;
-	}
+	
+	PORTB &= 0xF0;
 }
-
 
 #endif /* LIGHT_ON_H_ */

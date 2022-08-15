@@ -25,15 +25,15 @@ void set_adc()
 	ADMUX = 0x40;
 	ADCSRA = 0xCF;
 	ADCSRB = 0x00;
+	ADCSRA |= 0x40;
 }
 
 
-ISR(ADC_vect)
+ISR(ADC_vect) //interrupt service routine
 {
 	ADC_O1 = ADCL;
 	ADC_O2 = ADCH;
 	ADC_O = ADCL | ADCH << 8;
-	ADCSRA |= 0x40;
 }
 
 uint16_t voltage()
